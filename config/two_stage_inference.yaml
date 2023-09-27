@@ -1,0 +1,106 @@
+
+input_dir: /ai/data/flare2023/validation
+output_dir: /ai/code/Flare2023/result/test
+gt_dir: /ai/data/flare2023/val-gt
+score_dir: /ai/code/Flare2023/eval_score
+# all_base_NC_230719_144413
+# all_FSAL_baseline_230713_160957
+# all_base_128_230724_151301 
+# all_base_128_nc_230806_151624 
+# all_base_128_nc_dice+ce_230811_225750 
+# all_base_128_dice+ce_230815_104411
+first_stage_checkpoint_dir: /ai/code/Flare2023/checkpoint/first_stage/all_base_128_nc_dice+ce_230811_225750
+# all_HSAS_HS_1_.5_.5_230714_235840'all_HSAS_HS_230713_155228
+# all_HSAS_2D_DA_230716_122617 
+# all_HSAS_NC_dp_.1_230719_161755
+# all_HSAS_resnet_230716_133335
+#  all_HSAS_e1000_230724_201933
+# all_HSAS_w1_1_.5_230726_231246 
+#  all_HSAS_CGN_False_E500_230812_190538
+# all_HSAS_OAL_500_230816_192907
+# all_HSAS_w1_1_0_ce+Dice_230817_142401
+# all_HSAS_ema_w1_1_.5_230818_134226
+# all_HSAS_CP_ema_w1_.2_.2_230819_220644 
+# all_HSAS_CP_w1_0.5_0.5_230820_194730
+second_stage_abdomen_checkpoint_dir: /ai/code/Flare2023/checkpoint/second_stage_abdomen/all_HSAS_w1_1_0_ce+Dice_230817_142401
+
+
+
+
+# /all_FSAL_baseline_230713_183603'
+# all_base_da2d_bc16_230716_231359
+# all_SSTS_ssl_1_.5_230715_191635'
+# all_base_da2d_bc16_resnet_230717_214117
+# all_FSTS_2dda_resnet_CW_1_2_230718_144121
+# all_FSTS_nc_dp0.1_230719_144513
+# all_base_NC_bc24_230719_195748
+# all_base_da2d_bc16_resnet_230717_214117
+# all_HSTS_pce_C2_i-1_230722_093924
+#  all_HSTS_ema_C2_i-1_LW1_.5_230722_101611
+# all_HSTS_semi_w1_1_230724_212125
+#  all_HSTS_ema_c2_w11_230724_151253   
+#  all_HSTS_ema_c2_w10.5_230725_180950
+# all_HSTS_HSL_preWF_w1_1_c1_.05_230726_230841
+# all_HSTS_HSL_PW_w1_1_230726_230729 
+#  all_HSTS_HSL_preWF_w1_.5_230726_230511
+# all_WSTS_HSL_PW_w1_1_C1_.5_230728_235809
+# all_WSTS_HSL_preWF_w1_1_230729_000225
+#  all_WSTS_PW_w1.1_230730_151627
+# all_HSTS_PW_w1.1_dice+ce_230730_213549
+# all_WSTS_PW_w1_1_onlyDice_230730_181535
+# all_WSTS_PW_w1.1_ce_230731_234157
+# all_HSTS_PW_w1.1_ce_230731_233858 
+# all_WSTS_w1_0_ce+dice_230801_145232 
+# all_WSTS_w1_0_ce_230801_114242 
+#  all_WSTS_w1_0_Dice_230801_113556
+#  all_WSTS_w1_1_ce_230802_075652
+# all_WSTS_AD_w1_0_ce+dice_230804_185708
+# all_WSTS_fsl_20_w1_0_dice+ce_230807_115131
+  # all_WSTS_fsl_w1.5_dice_ce_230808_171411
+# all_WSTS_fsl_pw_w1_1_dice_ce_Ncgn_230809_084520 ********
+# all_WSTS_fsl_D_losses_230810_090839 
+# all_WSTS_fsl_pw_w1_1_dice+ce_B8_BN_230809_140129
+# all_WSTS_fsl_w1_1_dice_ce_230809_233655 
+# all_WSTS_fsl_w1_1_dice_ce_Nds_230810_102542   
+# all_WSTS_fsl_pw_w1_1_dice+ce_B8_BN_230809_140129
+# all_WSTS_fsl_pw_w1_1_D_loss_2dice0_230811_225953
+# all_WSTS_wsl_D_losses_2dice0_230811_153436
+# all_WSTS_fsl_pw_w1_1_dice_ce_Ncgn_230809_084520 
+# all_WSTS_fsl_w1_1_ce+dice_OTL_230814_195516 
+# all_WSTS_fsl_pw_OTL_w1_1.5_230816_151139 
+# all_WSTS_fsl_pw_OTL_w1_0_230816_154135 
+# all_WSTS_CP_w1_0_230818_232312 
+# all_WSTS_w1_1_teacher_230824_120346
+second_stage_tumour_checkpoint_dir: /ai/code/Flare2023/checkpoint/second_stage_tumour/all_WSTS_fsl_pw_w1_1_dice_ce_Ncgn_230809_084520
+
+
+
+# checkpoint_name: 'checkpoint_best.pth' 
+checkpoint_name: 'checkpoint_final.pth' 
+file_ending: '.nii.gz'
+
+downsample_using_GPU: True
+upsample_using_GPU: True
+
+do_first_stage_RMCC: False
+first_stage_area_least: 100
+first_stage_topk: 30
+
+do_second_stage_tumour_RMCC: False
+second_stage_tumour_area_least: 1000
+second_stage_tumour_topk: 30
+
+do_second_stage_abdomen_RMCC: True
+second_stage_abdomen_area_least: 1000
+second_stage_abdomen_topk: 30
+
+extend_size: [40,10,10]
+upsample_first: False
+threshold: null
+cover_tumour: False
+overwrite: True
+
+
+
+
+

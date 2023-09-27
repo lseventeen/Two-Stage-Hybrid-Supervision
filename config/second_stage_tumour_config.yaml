@@ -1,0 +1,75 @@
+
+
+Data_path:
+  raw_label_image_dir: '/ai/data/flare2023/imagesTr2200'
+  raw_label_seg_dir: '/ai/data/flare2023/labelsTr2200'
+  raw_unlabel_image_dir: '/ai/data/flare2023/unlabelTr1800'
+
+  not_tumour_predict_dir: '/ai/data/flare2023/not_tumour_label_case_predict'
+  unlabel_tumour_predict_dir: '/ai/data/flare2023/unlabel_tumour_case_predict'
+  label_abdomen_predict_dir: '/ai/data/flare2023/abdomenlabel2200'
+  unlabel_abdomen_predict_dir: '/ai/data/flare2023/unlabel1800_abdomen_predict'
+  # preprocess_label_data_dir: '/ai/data/flare2023/preprocessSecondStageTumourLabel_192192192'
+  # preprocess_label_data_dir: '/ai/data/flare2023/preprocessSecondStageTumourLabel_192192192_NC'
+  # preprocess_label_data_dir: '/ai/data/flare2023/preprocessSecondStageTumourLabel_192192192_mask'
+  # preprocess_label_data_dir: '/ai/data/flare2023/preprocessSecondStageTumourLabel_192192192_mask_-1'
+  # preprocess_label_data_dir: '/ai/data/flare2023/preprocessSecondStageTumourLabel_192192192_mask_with_gt'
+  preprocess_label_data_dir: '/ai/data/flare2023/preprocessSecondStageTumourLabel_192192192_mask_gt_nc'
+  # preprocess_label_data_dir: '/ai/data/flare2023/preprocessSecondStageTumourLabel_192192192_mask_gt'
+  # preprocess_label_data_dir: '/ai/data/flare2023/preprocessSecondStageTumourLabel_192192192_mask_-1_ME_50'
+  preprocess_unlabel_data_dir: '/ai/data/flare2023/preprocessSecondStageUnlabelTumour_192192192'
+  
+  preprocess_label_data_dir_test: '/ai/data/flare2023/preprocessSecondStageTumourLabel_test'
+
+  checkpoint_dir: '/ai/code/Flare2023/checkpoint/second_stage_tumour'
+Dataloader:
+  data_size: [192,192,192]
+  batch_size: 2
+Preprocess:
+  extend_size: [20,20,20]
+  mask_extend: [20,20,20]
+
+
+Postprocess:
+  area_least: 100
+  topk: 30
+
+Trainer:
+  pretrained_weights_file: /ai/code/Flare2023/checkpoint/second_stage_tumour/all_WSTS_fsl_pw_w1_1_dice_ce_Ncgn_230809_084520/checkpoint_final.pth
+  # pretrained_weights_file: null
+  do_dummy_2d_data_aug: True
+  copy_paste: False
+  removeLabel: True
+  initial_lr: 1e-2
+  weight_decay: 3e-5
+  num_iterations_per_epoch: 250
+  num_val_iterations_per_epoch: 50
+  num_epochs: 500
+  save_every: 50
+  CGN: False
+  only_tumour_label_case: False
+
+Model:
+  
+  UNet_class_name: ResidualEncoderUNet
+  num_classes: 2
+  n_conv_per_stage_decoder: 2
+  n_conv_per_stage_encoder: 2
+  UNet_base_num_features: 16
+  unet_max_num_features: 300
+  conv_kernel_sizes: [[3,3,3],[3,3,3],[3,3,3],[3,3,3],[3,3,3],[3,3,3]]
+  pool_op_kernel_sizes: [[1,1,1],[2,2,2],[2,2,2],[2,2,2],[2,2,2],[2,2,2]]
+  num_input_channels: 1
+  deep_supervision: True
+  dropout_p: 0
+  is_BN: False
+
+
+Loss:
+  ce_weight: 1
+  dice_weight: 1
+  label_loss_weight: 1
+  pseudo_label_loss_weight: 1
+  unlabel_pseudo_label_loss_weight: 0.5
+  classes_weight: [1,1]
+

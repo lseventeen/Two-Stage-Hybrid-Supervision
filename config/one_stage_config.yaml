@@ -1,0 +1,51 @@
+
+
+Data_path:
+  raw_label_image_dir: '/ai/data/flare2023/imagesTr2200'
+  raw_label_seg_dir: '/ai/data/flare2023/labelsTr2200'
+  raw_unlabel_image_dir: '/ai/data/flare2023/unlabelTr1800'
+  
+  preprocess_label_data_dir: '/ai/data/flare2023/preprocessLabelData2200_192192192_C'
+
+  preprocess_unlabel_data_dir: '/ai/data/flare2023/preprocessUnlabelData1800_192192192'
+  checkpoint_dir: '/ai/code/Flare2023/checkpoint'
+Dataloader:
+  data_size: [192,192,192]
+  batch_size: 3
+
+Trainer:
+
+  do_dummy_2d_data_aug: False
+  initial_lr: 1e-2
+  weight_decay: 3e-5
+  num_iterations_per_epoch: 250
+  num_val_iterations_per_epoch: 50
+  num_epochs: 500
+  save_every: 50
+
+Model:
+  
+  UNet_class_name: PlainConvUNet
+  num_classes: 15
+  n_conv_per_stage_decoder: 2
+  n_conv_per_stage_encoder: 2
+  UNet_base_num_features: 16
+  unet_max_num_features: 300
+  conv_kernel_sizes: [[3,3,3],[3,3,3],[3,3,3],[3,3,3],[3,3,3],[3,3,3]]
+  pool_op_kernel_sizes: [[1,1,1],[2,2,2],[2,2,2],[2,2,2],[2,2,2],[2,2,2]]
+  num_input_channels: 1
+  deep_supervision: True
+
+Loss:
+  label_loss_weight: 1
+  corrected_pseudo_label_loss_weight: 0.5
+  pseudo_label_loss_weight: 0.5
+
+  
+
+
+
+
+
+
+
